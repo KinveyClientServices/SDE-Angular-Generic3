@@ -492,62 +492,10 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
         });
     }
 
-
-
-
-
-    // inserts the tasks into the tasks collection
-    //
-    /*$scope.insertme2 = function() {
-        var mytask = document.getElementById("task").value;
-        document.getElementById("task").value = "";
-        console.log(mytask);
-
-        var myduedate = document.getElementById("duedate").value;
-        console.log(duedate);
-        document.getElementById("duedate").value = "";
-
-
-
-        var mycomplete = document.getElementById("completed").checked;
-        console.log(mycomplete);
-
-
-        var complete = false;
-        if (mycomplete == true) {
-            complete = true;
-        } else {
-            complete = false;
-        }
-
-
-        var data = {};
-
-        data.action = mytask;
-        data.duedate = myduedate;
-        data.completed = complete;
-        data.class = "personal";
-        data.Title = "Personal Task";
-        console.log(JSON.stringify(data));
-
-        var dataStore = $kinvey.DataStore.getInstance('tasks', $kinvey.DataStoreType.Network);
-
-        dataStore.save(data).then(function(result) {
-            console.log(result);
-        }).catch(function(error) {
-            console.log(error);
-        });
-
-        $ionicLoading.show({
-            template: 'task inserted',
-            noBackdrop: true,
-            duration: 2000
-        });
-
-    };*/
-
     $scope.picMe = function() {
         console.log('saving picture');
+
+        if(!navigator.camera) alert('No camera available.')
 
         navigator.camera.getPicture(onSuccess, onFail, {
             quality: 50,
@@ -565,14 +513,8 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
         function onFail(message) {
             alert('Failed because: ' + message);
         }
-
     }
-
-
 })
-
-
-
 
 
 .controller('ProductCtrl', function($scope, $kinvey) {

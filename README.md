@@ -10,11 +10,18 @@ Filestore - you can put PDF and other file content in the filestore and see them
 accounts collection - show importing the data and then "flip the switch" to either SFDC, REST, SQL Server, or (with a little BL) SAP.
 tasks Collection - Import data and then you can show, can connect to sharepoint
 
-To have ionic install your cordova plugins run:
+### Prerequisites
+* Install nodejs https://nodejs.org/en/
+* Install git cli: https://git-scm.com/downloads
+* Install Ionic: npm install -g ionic cordova (https://ionicframework.com/docs/intro/installation/)
+
+### Getting started
+* git clone git@github.com:KinveyClientServices/SDE-Angular-Generic3.git
+* git checkout feature/{your_team_name}
+* ionic serve
+
+To have ionic install your cordova plugins from the root directory run:
 ionic state restore
-
-from the root directory
-
 
 It is possible that you might need to install an earlier version of the ios platform.  Try the standard cordova platform add ios first, but if that yields failures, try:
 ionic platform add ios@3.9.2
