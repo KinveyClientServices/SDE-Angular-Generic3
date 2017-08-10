@@ -643,40 +643,12 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
     //
     $scope.doRefresh = function() {
         console.log('tasksrefresh');
-        var dataStore = $kinvey.DataStore.getInstance('tasks', $kinvey.DataStoreType.Sync);
-
-        dataStore.sync(null, {
-            useDeltaFetch: false
-        }).then(function(result) {
-            var tasks = result.pull;
-            tasks.concat(result.push)
-            console.log(tasks);
-            $scope.tasks = tasks;
-            $scope.$digest();
-
-        }).catch(function(error) {
-            console.log(error);
-        });
+        //TODO: LAB: Use a sync store to synchronize tasks data
     }
 
     $scope.$on('$ionicView.beforeEnter', function() {
         console.log('tasks load view');
-        var dataStore = $kinvey.DataStore.getInstance('tasks', $kinvey.DataStoreType.Sync);
-
-        // pass null and the useDeltaFetch option because some of the delta fetch options for
-        // rapid connectors might not be there in SharePoint today
-        //
-        dataStore.sync(null, {
-            useDeltaFetch: false
-        }).then(function(result) {
-            var tasks = result.pull;
-            console.log(tasks);
-            $scope.tasks = tasks;
-            $scope.$digest();
-
-        }).catch(function(error) {
-            console.log(error);
-        });
+        //TODO: LAB: Use a sync store to pull latest tasks data
 
     })
 })
@@ -689,32 +661,14 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
     //
     $scope.doRefreshRef = function() {
         console.log('ref refresh view');
-        //var fileStore = new $kinvey.Files();
-        var query = new $kinvey.Query();
-        query.greaterThan('size', 0);
-
-        var promise = $kinvey.Files.find(query).then(function(files) {
-            console.log(files);
-            $scope.files = files;
-            $scope.$digest();
-        }).catch(function(error) {
-            console.log(error);
-        });
+        //TODO: LAB: Use a file store to download files
 
     }
 
     $scope.$on('$ionicView.beforeEnter', function() {
         console.log('ref load view');
 
-        var query = new $kinvey.Query();
-        query.greaterThan('size', 0);
-        var promise = $kinvey.Files.find(query).then(function(files) {
-            console.log(files);
-            $scope.files = files;
-            $scope.$digest();
-        }).catch(function(error) {
-            console.log(error);
-        });
+        //TODO: LAB: Use a file store to download files
 
     });
 })
@@ -841,28 +795,12 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
     $scope.doRefresh = function() {
         console.log('refresh');
 
-        var dataStore = $kinvey.DataStore.getInstance('accounts', $kinvey.DataStoreType.Network);
-
-        dataStore.find(null, {
-            useDeltaFetch: false
-        }).subscribe(function(result) {
-            console.log(result);
-
-            $scope.accounts = result;
-            $scope.$digest();
-        });
+        //TODO: LAB: Use a network store to get latest accounts data
     }
 
     $scope.$on('$ionicView.beforeEnter', function() {
         console.log('accounts load view');
-        var dataStore = $kinvey.DataStore.getInstance('accounts', $kinvey.DataStoreType.Network);
-        dataStore.find(null, {
-            useDeltaFetch: false
-        }).subscribe(function(result) {
-
-            $scope.accounts = result;
-            $scope.$digest();
-        });
+        //TODO: LAB: Use a network store to get latest accounts data
 
     })
 })
@@ -969,17 +907,14 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
 
         console.log($scope.userData.email);
 
-        var promise = $kinvey.User.login({
-            username: $scope.userData.email,
-            password: $scope.userData.password
-        });
+        //TODO: LAB: Login with a Kinvey basic user
         promise.then(
             function(response) {
                 // Kinvey login finished with success
                 $scope.submittedError = false;
                 console.log('logged in with KinveyAuth2');
                 $state.go('menu.tabs.home');
-                return $kinvey.Push.register();
+                //TODO: LAB: register for push notifications
             }).catch(
             function(error) {
                 //Kinvey login finished with error
@@ -1005,14 +940,12 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
         console.log('login user');
 
         var user = new $kinvey.User();
-        user.loginWithMIC('http://localhost:8100', $kinvey.AuthorizationGrant.AuthorizationCodeLoginPage, {
-            version: 2
-        }).then(function(user) {
+        //TODO: LAB: login with Mobile Identity Connect
+        promise.then(function(user) {
             console.log('logged in');
             $scope.submittedError = false;
             console.log(user);
-            return $kinvey.Push.register();
-
+            //TODO: LAB: register for push notifications
         }).catch(function(error) {
             console.log(error);
             return null;
@@ -1042,11 +975,7 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
             return;
         }
 
-        var promise = $kinvey.User.signup({
-            username: $scope.userData.email,
-            password: $scope.userData.password,
-            email: $scope.userData.email
-        });
+        //TODO: LAB: Signup a new Kinvey User
         console.log("signup promise");
         promise.then(
             function() {
@@ -1072,21 +1001,10 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
     $scope.logout = function() {
         console.log('logout user2');
         //Kinvey logout starts
-        var user = $kinvey.User.getActiveUser();
-        if (user) {
 
-            $kinvey.Push.unregister()
-                .then(function(response) {
-                    console.log(response);
-                    return $kinvey.User.logout();
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-        } else {
-            console.log('no user to log out');
-        }
-        //$kinvey.User.logout();
+        //TODO: LAB: Unregister for push notifications
+        //TODO: LAB: Logout the active user
+
         $ionicLoading.show({
             template: "User logged out",
             noBackdrop: true,
