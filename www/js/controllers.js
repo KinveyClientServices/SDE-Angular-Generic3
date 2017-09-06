@@ -477,7 +477,7 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
         data.savedpic = $scope.taskInfo.savedurl;
         console.log(JSON.stringify(data));
 
-        var dataStore = $kinvey.DataStore.getInstance('tasks', $kinvey.DataStoreType.Network);
+        var dataStore = $kinvey.DataStore.getInstance('tasks', $kinvey.DataStoreType.Sync);
 
         dataStore.save(data).then(function(result) {
             console.log(result);
@@ -640,16 +640,44 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
 .controller('ProjectsCtrl', function($scope, $kinvey) {
 
     // syncs with the tasks list collection
-    //
+    var tasksDataStore = $kinvey.DataStore.collection('tasks', $kinvey.DataStoreType.Sync);
+    
     $scope.doRefresh = function() {
         console.log('tasksrefresh');
         //TODO: LAB: Use a sync store to synchronize tasks data
+        tasksDataStore.find().subscribe(function(data) {
+            $scope.tasks = data;
+            $scope.$digest();
+          }, function(error) {
+            console.log(error);
+          }, function() {
+            // Called after the local data has been retrieved
+          });
+
+        // var promise = dataStore.pull().then(function(entities) {
+        //     console.log(entities);
+        //     $scope.tasks = entities;
+        //     $scope.$digest();
+        //   }).catch(function(error) {
+        //     console.log(error);
+            
+        //   });
+          // Find data locally on the device.
+          
     }
 
     $scope.$on('$ionicView.beforeEnter', function() {
         console.log('tasks load view');
         //TODO: LAB: Use a sync store to pull latest tasks data
+        var promise = tasksDataStore.sync().then(function(result) {
+            console.log('Sync Entities: ', result);
+            console.log('push', result.push)
+            $scope.tasks = result.pull;
+            $scope.$digest();
 
+        }).catch(function(error) {
+            console.log(error);
+        });
     })
 })
 
@@ -669,6 +697,17 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
         console.log('ref load view');
 
         //TODO: LAB: Use a file store to download files
+        var query = new $kinvey.Query();
+        query.equalTo('mimeType', 'application/pdf');
+        var promise = $kinvey.Files.find(query)
+        .then(function(files) {
+            console.log(files)
+            $scope.files = files;
+            $scope.$digest();
+        })
+        .catch(function(error) {
+            console.log(error)
+        });
 
     });
 })
@@ -791,16 +830,37 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
 
 
 .controller('PartnerCtrl', function($scope, $kinvey) {
-
+    var dataStore = $kinvey.DataStore.collection('accounts');
+    
     $scope.doRefresh = function() {
         console.log('refresh');
 
         //TODO: LAB: Use a network store to get latest accounts data
+        var stream = dataStore.find();
+        stream.subscribe(function onNext(entities) {
+            $scope.accounts = entities;
+            $scope.$digest();
+            console.log(entities) 
+        }, function onError(error) {
+            console.log(error)     
+        }, function onComplete() {
+            console.log("Completed")   
+        });
     }
 
     $scope.$on('$ionicView.beforeEnter', function() {
         console.log('accounts load view');
         //TODO: LAB: Use a network store to get latest accounts data
+        var stream = dataStore.find();
+        stream.subscribe(function onNext(entities) {
+            $scope.accounts = entities;
+            $scope.$digest();
+            console.log(entities) 
+        }, function onError(error) {
+            console.log(error)     
+        }, function onComplete() {
+            console.log("Completed")   
+        });
 
     })
 })
@@ -908,6 +968,8 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
         console.log($scope.userData.email);
 
         //TODO: LAB: Login with a Kinvey basic user
+        var promise = $kinvey.User.login($scope.userData.email, $scope.userData.password);
+        
         promise.then(
             function(response) {
                 // Kinvey login finished with success
@@ -1004,7 +1066,12 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
 
         //TODO: LAB: Unregister for push notifications
         //TODO: LAB: Logout the active user
-
+        var promise = $kinvey.User.logout();
+        promise = promise.then(function onSuccess() {
+          // ...
+        }).catch(function onError(error) {
+          // ...
+        });
         $ionicLoading.show({
             template: "User logged out",
             noBackdrop: true,

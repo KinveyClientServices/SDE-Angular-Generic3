@@ -75,6 +75,11 @@ angular.module('starter', ['ionic', 'kinvey', 'starter.controllers', 'ngIOS9UIWe
 
     //TODO: LAB: initialize the Kinvey SDK
 
+    $kinveyProvider.init({
+        appKey: 'kid_rJwBzP3YZ',
+        appSecret: '1067a72c87ea408a949a86699729ff04'
+    });
+
     $stateProvider
         .state('menu', {
             url: "/menu",
