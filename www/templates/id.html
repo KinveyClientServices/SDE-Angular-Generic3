@@ -1,0 +1,113 @@
+<ion-view view-title="Settings" cache-view="false">
+    <ion-nav-bar title="Hello" ng-style="{'background-color': primarycolor}">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+  
+    <ion-content class="has-header padding">
+        <div class="row">
+            <div class="col">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Group Name</span>
+                    <input class="idtext" type="text" ng-model="idData.groupname" readonly>
+                </label>
+            </div>
+            <div class="col">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Group #</span>
+                    <input class="idtext" type="text" ng-model="idData.groupnum" readonly>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Provider</span>
+                    <input class="idtext" type="text" ng-model="idData.provider" readonly>
+                </label>
+            </div>
+            <div class="col">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Subscriber #</span>
+                    <input class="idtext" type="text" ng-model="idData.subscribernum" readonly>
+                </label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Plan</span>
+                    <input class="idtext" type="text" ng-model="idData.plan" readonly>
+                </label>
+            </div>
+            <div class="col">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Issue Date</span>
+                    <input class="idtext" type="text" ng-model="idData.issuedate" readonly>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="img/add-to-apple-wallet-logo.png" width="60%">
+            </div>
+        </div>
+        <div class="card idcardbg">
+            <div class="row bar-positive">
+                <div class="col col-67">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Office Visit Co-pay:</span>
+                    </label>
+                </div>
+                <div class="col">
+                    <label class="item item-input item-stacked-label">
+                        <input class="idtext2" type="text" ng-model="idData.officecopay" readonly>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-67">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Specialist Care Co-pay:</span>
+                    </label>
+                </div>
+                <div class="col">
+                    <label class="item item-input item-stacked-label">
+                        <input class="idtext2" type="text" ng-model="idData.speccopay" readonly>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-67">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Individual Deductible:</span>
+                    </label>
+                </div>
+                <div class="col">
+                    <label class="item item-input item-stacked-label">
+                        <input class="idtext2" type="text" ng-model="idData.deductible_individual_total" readonly>
+                    </label>
+                </div>
+            </div>
+            <div class="row bar-positive">
+                <div class="col col-67">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Family Deductible:</span>
+                    </label>
+                </div>
+                <div class="col">
+                    <label class="item item-input item-stacked-label">
+                        <input class="idtext2" type="text" ng-model="idData.deductible_family_total" readonly>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar align-title="left" class="bar-stable">
+        <div class="buttons">
+            <button class="button" ng-click="doSave();">Save</button>
+        </div>
+    </ion-footer-bar>
+</ion-view>
