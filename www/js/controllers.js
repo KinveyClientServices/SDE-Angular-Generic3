@@ -957,8 +957,46 @@ angular.module('starter.controllers', ['kinvey', 'ngCordova'])
     });
 })
 
+.controller('IDCtrl', function($scope, $kinvey, $q) {
+    console.log('idctrl');
 
+    $scope.idData = {
+        plan: "",
+        provider: "",
+        patient: "",
+        groupname: "",
+        groupnum: "",
+        subscriber: "",
+        subscribernum: "",
+        membernum: "",
+        rerate: "",
+        issuedate: "",
+        coverage: "",
+        rxbin: "",
+        rxocn: "",
+        rx: "",
+        officecopay: "",
+        preventative: "",
+        emergency: "",
+        urgent: ""
+    }
 
+    $scope.$on('$ionicView.beforeEnter', function() {
+
+        var dataStore = $kinvey.DataStore.getInstance('idcards', $kinvey.DataStoreType.Network);
+
+        console.log('entering idcard');
+
+        dataStore.find().subscribe(function(result) {
+            console.log(result);
+            $scope.idData = result[0];
+            console.log($scope.idData);
+            $scope.$digest();
+        });
+    });
+    
+    
+})
 .controller('AccountCtrl', function($scope, $state, $kinvey, $cordovaPush, $http, $ionicLoading) {
     $scope.userData = {
         email: "",

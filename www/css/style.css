@@ -245,11 +245,15 @@
   text-align:left;
 }
 
-
+.idcardbg {
+  background-color:#12a9e0 !important;
+  color: #007bb0 !important;
+}
    .login-background {
-    background: url('../img/splash.png') no-repeat center center fixed;
+    background: url('../img/splash.png') no-repeat top center fixed;
     background-size: cover;
   height: 100%;
+  padding-top: 135px;
   overflow: hidden;
 }
 

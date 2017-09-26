@@ -74,8 +74,8 @@ angular.module('starter', ['ionic', 'kinvey', 'starter.controllers', 'ngIOS9UIWe
     $ionicConfigProvider.tabs.position('bottom');
 
     $kinveyProvider.init({
-        appKey: 'kid_ZJk02vOUFg',
-        appSecret: 'c1a32d5b3c474d0fa20a6f33fef396d5'
+        appKey: 'kid_H1MzlJQsW',
+        appSecret: '1848899e8fc34755a1c47317def85ff9'
     });
 
 
@@ -156,6 +156,15 @@ angular.module('starter', ['ionic', 'kinvey', 'starter.controllers', 'ngIOS9UIWe
         }
     })
 
+    .state('menu.id', {
+        url: "/id",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/id.html",
+                controller: 'IDCtrl'
+            }
+        }
+    })
 
     .state('menu.brand', {
         url: '/brand',
